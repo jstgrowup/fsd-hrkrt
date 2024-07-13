@@ -3,3 +3,4 @@ dir ==> to check all teh folders that are inside the current directory (for chec
 mkdir ==> create a folder inside the current directory
 touch ==> create a file
 type ==> to see the contents of the file and if in gitbash than use cat
+move ==> to move the files or folders example move [file/folder] [desination]
