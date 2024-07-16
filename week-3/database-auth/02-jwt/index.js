@@ -22,8 +22,8 @@ function signJwt(username, password) {
   if (!result.success) {
     return null;
   }
-  const payload = { username, password };
-  return jwt.sign(payload, jwtPassword, { expiresIn: "1h" });
+  const payload = { username };
+  return jwt.sign(payload, jwtPassword);
 }
 
 /**
