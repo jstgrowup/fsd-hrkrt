@@ -3,7 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Animals</title>
   </head>
-  <body></body>
+  <body>
+    <script>
+      function getAnimalData() {
+        fetch("https://fakerapi.it/api/v1/persons")
+          .then((response) => {
+            response.json().then((data) => {
+              console.log(data);
+            });
+          })
+          .catch((er) => {
+            console.log("er:", er);
+          });
+      }
+    </script>
+    <button onclick="getAnimalData()">Get animal</button>
+  </body>
 </html>
