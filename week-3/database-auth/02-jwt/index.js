@@ -18,16 +18,12 @@ const payloadSchema = z.object({
  */
 function signJwt(username, password) {
   // Your code here
-  const payload = {
-    username,
-    password,
-  };
-  const validatedResponse = payloadSchema.safeParse(payload);
-  if (!validatedResponse.success) {
+  const result = payloadSchema.safeParse({ username, password });
+  if (!result.success) {
     return null;
   }
-  const token = jwt.sign(payload, jwtPassword);
-  return token;
+  const payload = { username, password };
+  return jwt.sign(payload, jwtPassword, { expiresIn: "1h" });
 }
 
 /**
@@ -39,12 +35,10 @@ function signJwt(username, password) {
  *                    using the secret key.
  */
 function verifyJwt(token) {
-  console.log("token:", token);
-  // Your code here
-  const decodedPayload = jwt.verify(token, jwtPassword);
-  if (decodedPayload) {
+  try {
+    jwt.verify(token, jwtPassword);
     return true;
-  } else {
+  } catch (err) {
     return false;
   }
 }
@@ -58,6 +52,7 @@ function verifyJwt(token) {
  */
 function decodeJwt(token) {
   // Your code here
+  return jwt.decode(token) ? true : false;
 }
 
 module.exports = {
