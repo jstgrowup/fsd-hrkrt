@@ -30,8 +30,13 @@ router.post("/courses", adminMiddleware, async (req, res) => {
 
 router.get("/courses", adminMiddleware, async (req, res) => {
   // Implement fetching all courses logic
-  const allCourses = await Course.find({});
-  return res.status(200).json({ courses: allCourses });
+  try {
+    const allCourses = await Course.find();
+
+    return res.status(200).json({ courses: allCourses });
+  } catch (error) {
+    console.log("error:", error);
+  }
 });
 
 module.exports = router;
