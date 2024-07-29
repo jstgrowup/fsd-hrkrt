@@ -3,29 +3,26 @@ import "./App.css";
 import { CountContext } from "./context";
 
 function App() {
-  const [count, setcount] = useState(0);
   return (
     <div>
-      <CountContext.Provider value={count}>
-        <Count setcount={setcount} />
-      </CountContext.Provider>
+      <Count />
     </div>
   );
 }
-const Count = ({ setcount }) => {
+const Count = () => {
   return (
     <div>
       <CountRenderer />
-      <Buttons setCount={setcount} />
+      <Buttons />
     </div>
   );
 };
 function CountRenderer() {
-  const count = useContext(CountContext);
+  const count = 0;
   return <div>{count}</div>;
 }
-function Buttons({ setCount }) {
-  const count = useContext(CountContext);
+function Buttons() {
+  const count = 0;
 
   return (
     <div>
