@@ -1,11 +1,14 @@
-import React, { Suspense, useContext, useState } from "react";
+import React from "react";
 import "./App.css";
-import { CountContext } from "./context";
 
+import { RecoilRoot, useRecoilState, useRecoilValue } from "recoil";
+import { countAtom } from "./store/atoms/count";
 function App() {
   return (
     <div>
-      <Count />
+      <RecoilRoot>
+        <Count />
+      </RecoilRoot>
     </div>
   );
 }
@@ -18,11 +21,14 @@ const Count = () => {
   );
 };
 function CountRenderer() {
-  const count = 0;
+  // if i only neeed the value of the state
+  const count = useRecoilValue(countAtom);
+  // if i need both the state and the setter state
+  // const [count, setcount] = useRecoilState(countAtom);
   return <div>{count}</div>;
 }
 function Buttons() {
-  const count = 0;
+  const [count, setCount] = useRecoilState(countAtom);
 
   return (
     <div>
