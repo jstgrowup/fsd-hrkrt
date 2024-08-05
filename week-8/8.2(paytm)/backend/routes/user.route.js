@@ -13,6 +13,7 @@ const {
   getAllUsersInBulk,
 } = require("../helpers/user.helpers");
 const { tokenFromBody } = require("../utils/jwt");
+const { putBalanceWhileSignup } = require("../helpers/accounts.helpers");
 userRouter.post("/sign-up", async (req, res) => {
   const userBody = req.body;
   const validatedUser = signupZodSchema.safeParse(userBody);
@@ -30,6 +31,10 @@ userRouter.post("/sign-up", async (req, res) => {
       .json({ message: "Something went wrong while creating the user" });
   }
   const token = tokenFromBody({ userId: newCreatedUser._id });
+  await putBalanceWhileSignup(
+    newCreatedUser._id,
+    Math.floor(Math.random() * 10000) + 1
+  );
   return res.status(200).json({ message: "User created successfully", token });
 });
 userRouter.post("/sign-in", async (req, res) => {
@@ -65,7 +70,6 @@ userRouter.put("/update-info/:userId", async (req, res) => {
   if (updatedUser) {
     res.status(200).json({ message: "Updated successfully" });
   }
-
   res.status(411).json({ message: "Error while updating information" });
 });
 userRouter.get("/bulk", async (req, res) => {
