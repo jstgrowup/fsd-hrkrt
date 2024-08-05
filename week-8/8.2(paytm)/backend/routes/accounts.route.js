@@ -16,19 +16,19 @@ accountRouter.post("/create-transaction", async (req, res) => {
     transactionBody.fromAccount,
     transactionBody.amount
   );
-  if (debitedResponse) {
-    const creaditResponse = await creditHelper(
-      transactionBody.toAccountId,
-      transactionBody.amount
-    );
-    if (creaditResponse) {
-      return res.status(200).json({ message: "Transfer successful" });
-    }
-    return res.status(411).json({ message: "Credit  Unsuccessfull" });
+  if (!debitedResponse) {
+    return res.status(411).json({ message: "Insufficient balance" });
   }
-  return res
-    .status(411)
-    .json({ message: "Failed Transaction please try again" });
+  const creaditResponse = await creditHelper(
+    transactionBody.toAccountId,
+    transactionBody.amount
+  );
+  if (!creaditResponse) {
+    res.status(200).json({ message: "Creadit unsuccessful" });
+  }
+  return res.status(200).json({
+    message: "Transfer successful",
+  });
 });
 accountRouter.get("/balance", async (req, res) => {
   const userId = req.userId;

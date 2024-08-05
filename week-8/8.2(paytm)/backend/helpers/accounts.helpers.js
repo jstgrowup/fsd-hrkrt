@@ -2,10 +2,8 @@ const Account = require("../db/accounts.schema");
 
 const debitHelper = (fromAccountId, amount) => {
   return Account.findByIdAndUpdate(
-    fromAccountId,
-    {
-      $inc: { balance: -amount },
-    },
+    { _id: fromAccountId, balance: { $gte: amount } },
+    { $inc: { balance: -amount } },
     { new: true }
   );
 };
