@@ -11,12 +11,16 @@ const {
   createNewUser,
   findUserByUserNameAndPass,
   getAllUsersInBulk,
+  updatePasswordByName,
 } = require("../helpers/user.helpers");
 const { tokenFromBody } = require("../utils/jwt");
 const { putBalanceWhileSignup } = require("../helpers/accounts.helpers");
+const { authMiddleWare } = require("../middlewares/auth.middleware");
 userRouter.post("/sign-up", async (req, res) => {
   const userBody = req.body;
+
   const validatedUser = signupZodSchema.safeParse(userBody);
+
   if (!validatedUser.success) {
     return res.status(411).json({ data: validatedUser.data });
   }
@@ -31,6 +35,7 @@ userRouter.post("/sign-up", async (req, res) => {
       .json({ message: "Something went wrong while creating the user" });
   }
   const token = tokenFromBody({ userId: newCreatedUser._id });
+
   await putBalanceWhileSignup(
     newCreatedUser._id,
     Math.floor(Math.random() * 10000) + 1
@@ -39,9 +44,9 @@ userRouter.post("/sign-up", async (req, res) => {
 });
 userRouter.post("/sign-in", async (req, res) => {
   const userBody = req.body;
-  const validatedUser = signInZodSchema(userBody);
+  const validatedUser = signInZodSchema.safeParse(userBody);
   if (!validatedUser.success) {
-    res.status(411).json({ data: validatedUser.data });
+    return res.status(411).json({ data: validatedUser.data });
   }
   const existingUser = await findUserByUserNameAndPass(
     userBody.username,
@@ -49,28 +54,39 @@ userRouter.post("/sign-in", async (req, res) => {
   );
   if (existingUser) {
     const token = tokenFromBody({ userId: existingUser._id });
-    res.status(200).json({ message: "User signed in successfully", token });
+    return res
+      .status(200)
+      .json({ message: "User signed in successfully", token });
   }
 
-  res.status(411).json({ message: "Error while logging in" });
+  return res.status(411).json({ message: "Error while logging in" });
 });
-userRouter.put("/update-info/:userId", async (req, res) => {
-  const userBody = req.body;
-  const userId = req.userId;
-  const validatedUser = resetPassZodSchema(userBody);
-  if (!validatedUser.success) {
-    res.status(411).json({ data: validatedUser.data });
+userRouter.put("/update-info/:userId", authMiddleWare, async (req, res) => {
+  try {
+    const userBody = req.body;
+
+    const userId = req.userId;
+    const validatedUser = resetPassZodSchema.safeParse(userBody);
+
+    if (!validatedUser.success) {
+      return res.status(411).json({ data: validatedUser.data });
+    }
+    const updatedUser = await updatePasswordByName(
+      userId,
+      userBody.password,
+      userBody.firstName,
+      userBody.lastName
+    );
+
+    if (updatedUser) {
+      return res.status(200).json({ message: "Updated successfully" });
+    }
+    return res
+      .status(411)
+      .json({ message: "Error while updating information" });
+  } catch (error) {
+    console.log("error:", error);
   }
-  const updatedUser = await updatePasswordByName(
-    userId,
-    userBody.password,
-    userBody.firstName,
-    userBody.lastName
-  );
-  if (updatedUser) {
-    res.status(200).json({ message: "Updated successfully" });
-  }
-  res.status(411).json({ message: "Error while updating information" });
 });
 userRouter.get("/bulk", async (req, res) => {
   const filter = req.query.harkirat;

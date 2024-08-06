@@ -4,6 +4,7 @@ const signupZodSchema = zod.object({
   firstName: zod.string(),
   lastName: zod.string(),
   password: zod.string(),
+  email: zod.string(),
 });
 const signInZodSchema = zod.object({
   username: zod.string(),

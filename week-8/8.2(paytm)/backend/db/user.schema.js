@@ -13,12 +13,12 @@ const UserSchema = new Schema({
   firstName: {
     type: String,
     required: true,
-    minLength: 6,
+    minLength: 2,
   },
   lastName: {
     type: String,
     required: true,
-    minLength: 6,
+    minLength: 2,
   },
   email: {
     type: String,

@@ -8,8 +8,8 @@ const createNewUser = (userInfo) => {
 const findUserByUserNameAndPass = (username, password) => {
   return User.findOne({ username, password });
 };
-const findUserById = (username, password) => {
-  return User.findOne({ username, password });
+const findUserById = (id) => {
+  return User.findById(id);
 };
 const findByNameUpdatePass = (userId, firstName, lastName, password) => {
   return User.findByIdAndUpdate(
@@ -18,8 +18,14 @@ const findByNameUpdatePass = (userId, firstName, lastName, password) => {
     { new: true }
   );
 };
-const updatePasswordByName = (username, password) => {
-  return User.findOne({ username, password });
+const updatePasswordByName = (userId, password, firstName, lastName) => {
+  return User.findByIdAndUpdate(
+    userId,
+    {
+      $set: { password, firstName, lastName },
+    },
+    { new: true }
+  );
 };
 const getAllUsersInBulk = (filter) => {
   return User.find({

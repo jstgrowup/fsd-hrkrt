@@ -16,11 +16,11 @@ const creditHelper = (toAccountId, amount) => {
     { new: true }
   );
 };
-const putBalanceWhileSignup = (userId, amount) => {
-  return Account.create({ userId, amount });
+const putBalanceWhileSignup = (userId, balance) => {
+  return Account.create({ userId, balance });
 };
 const getBalanceByUser = (userId) => {
-  return Account.findOne({ userId });
+  return Account.findOne({ userId }).select("balance");
 };
 module.exports = {
   putBalanceWhileSignup,
@@ -28,3 +28,5 @@ module.exports = {
   creditHelper,
   getBalanceByUser,
 };
+
+// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NmIyNDhlZmI4MDFhZDY1NWRlODNjMTciLCJpYXQiOjE3MjI5NjAxMTF9.FBjUVf7T_txURXYV1Q7Ose3AxhUILCqeYnsGgebV0WE
