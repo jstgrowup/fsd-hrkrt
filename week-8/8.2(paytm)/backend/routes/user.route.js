@@ -18,8 +18,10 @@ const { putBalanceWhileSignup } = require("../helpers/accounts.helpers");
 const { authMiddleWare } = require("../middlewares/auth.middleware");
 userRouter.post("/sign-up", async (req, res) => {
   const userBody = req.body;
+  console.log("userBody:", userBody);
 
   const validatedUser = signupZodSchema.safeParse(userBody);
+  console.log("validatedUser:", validatedUser);
 
   if (!validatedUser.success) {
     return res.status(411).json({ data: validatedUser.data });
