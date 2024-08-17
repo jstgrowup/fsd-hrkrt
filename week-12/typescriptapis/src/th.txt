@@ -1,0 +1,5 @@
+Utility types in TypeScript are predefined types that help manipulate and transform types in a variety of ways
+1. Pick
+2. Partial
+3. Readonly
+4. Record

@@ -1,0 +1,50 @@
+interface User {
+  id: string;
+  name: string;
+  age: number;
+  username: string;
+  email: string;
+  password: string;
+}
+// Pick
+type UpdatedUser = Pick<User, "name" | "age" | "email">;
+// partial
+type UpdatedPropsOptional = Partial<UpdatedUser>;
+function updateUser(updatedProps: UpdatedPropsOptional) {
+  // hit the database to update the user
+}
+updateUser({
+  name: "asd",
+});
+type Car = {
+  readonly name: string;
+  readonly model: number;
+};
+type AllCar = {
+  name: string;
+  model: number;
+};
+const CarCons: Car = {
+  name: "Tiago",
+  model: 2024,
+};
+const CarConss: Readonly<AllCar> = {
+  name: "Tiago",
+  model: 2024,
+};
+// CarCons.model = 4;
+// throws error
+type UsersObj = Record<string, string>;
+const users: UsersObj = {
+  name: "email",
+  email: "subham@gmail.com",
+  43: "haha",
+};
+type EventType = "click" | "scroll" | "mousemove";
+type ExcludeEvent = Exclude<EventType, "scroll">;
+const handleEvent = (event: ExcludeEvent) => {
+  console.log(event);
+};
+
+handleEvent("scroll");
+handleEvent("click");
