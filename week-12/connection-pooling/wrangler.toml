@@ -3,7 +3,8 @@ name = "damp-dew-1492"
 main = "src/index.ts"
 compatibility_date = "2024-08-15"
 compatibility_flags = ["nodejs_compat"]
-
+[vars]
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiZjQ4OTUwZjMtMzVmNS00ZGZhLWFmZGQtODQ4NTQxN2EwMmZlIiwidGVuYW50X2lkIjoiM2NiNzNjMThiOTBkNThhNzViMmFmZDg5N2NlODI4YTMwNzdiZDUwOTBkYmIxZDI5ODk0YmJlYTUxM2FlYTJlMSIsImludGVybmFsX3NlY3JldCI6Ijg0MzNjMWQ0LWVlZGQtNDE0Ny05YThkLWE1NDBmYmIzYTIxMyJ9.UlIUlPb1sqD0uk7nXdSbgvUs3UfZdwXJBSQN0oyxYoU"
 # Automatically place your workloads in an optimal location to minimize latency.
 # If you are running back-end logic in a Worker, running it closer to your back-end infrastructure
 # rather than the end user may result in better performance.

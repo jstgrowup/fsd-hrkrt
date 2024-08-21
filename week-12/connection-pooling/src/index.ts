@@ -1,3 +1,5 @@
+import { PrismaClient } from '@prisma/client/extension';
+import { withAccelerate } from '@prisma/extension-accelerate';
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
  *
@@ -10,9 +12,23 @@
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
-
+export interface Env {
+	DATABASE_URL: string;
+}
 export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
+	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		const prisma = new PrismaClient({
+			datasourceUrl: env.DATABASE_URL,
+		}).$extends(withAccelerate);
+
+		await prisma.log.create({
+			data: {
+				level: 'Info',
+				meta: {
+					headers: JSON.stringify(request.headers),
+				},
+			},
+		});
+		return new Response('request method');
 	},
 } satisfies ExportedHandler<Env>;
