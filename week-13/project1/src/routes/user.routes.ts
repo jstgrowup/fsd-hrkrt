@@ -31,11 +31,12 @@ userRouter.post("/signin", async (c) => {
   const user = await prisma.user.findUnique({
     where: { email: body.email, password: body.password },
   });
+
   if (!user) {
     c.status(403);
     return c.json({ error: "user not found" });
   }
   const token = await sign({ id: user.id }, c?.env.JWT_SECRET);
 
-  return c.text(token);
+  return c.json(token);
 });
