@@ -1,7 +1,13 @@
-import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { SignupInput } from "@jstgrwup/medium-common";
+import LabelledInput from "./Labelled-input.component";
 const SignupForm = ({ type }: { type: "signup" | "signin" }) => {
+  const [userInputs, setuserInput] = useState<SignupInput>({
+    name: "",
+    username: "",
+    password: "",
+  });
   return (
     <div className="h-screen flex justify-center flex-col items-center border border-red-600">
       <div>
@@ -12,6 +18,13 @@ const SignupForm = ({ type }: { type: "signup" | "signin" }) => {
             Login
           </Link>
         </p>
+        <LabelledInput
+          label="Username"
+          placeholder="Enter your username"
+          onChange={(e) =>
+            setuserInput({ ...userInputs, name: e.target.value })
+          }
+        />
       </div>
     </div>
   );
