@@ -1,13 +1,13 @@
 import Quote from "../components/Quote.component";
-import AuthForm from "../components/Auth.component";
 
+import SignupForm from "../components/Auth/Signup-form.component";
 const Signup = () => {
   return (
-    <div className="grid grid-cols-2 ">
+    <div className="grid grid-cols-1 lg:grid-cols-2 ">
       <div>
-        <AuthForm type="signup" />
+        <SignupForm />
       </div>
-      <div className="invisible lg:visible">
+      <div className="hidden lg:block">
         <Quote />
       </div>
     </div>
