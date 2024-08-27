@@ -1,11 +1,12 @@
-import Quote from "../components/Quote.component";
+import React from "react";
 import AuthForm from "../components/Auth.component";
+import Quote from "../components/Quote.component";
 
-const Signup = () => {
+const SignIn = () => {
   return (
     <div className="grid grid-cols-2 ">
       <div>
-        <AuthForm type="signup" />
+        <AuthForm type="signin" />
       </div>
       <div className="invisible lg:visible">
         <Quote />
@@ -14,4 +15,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignIn;
