@@ -6,8 +6,11 @@ import { AUTH_TYPE } from "../../utils/Enums";
 import AuthButton from "./Auth-button.component";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { UserState } from "../../recoil/atoms";
 const SigninForm = () => {
   const navigate = useNavigate();
+  const setCount = useSetRecoilState(UserState);
   const [userInputs, setuserInput] = useState<SigninInput>({
     email: "",
     password: "",
@@ -21,6 +24,7 @@ const SigninForm = () => {
       .then((response) => {
         const token = response.data;
         localStorage.setItem("token", token);
+        setCount(token);
         navigate("/blogs");
       })
       .catch((error) => {

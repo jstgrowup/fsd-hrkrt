@@ -6,3 +6,9 @@ export interface LabelledInterface {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type?: string;
 }
+export interface BlogCardProps {
+  authorName: string;
+  title: string;
+  content: string;
+  publishedDate: string;
+}
