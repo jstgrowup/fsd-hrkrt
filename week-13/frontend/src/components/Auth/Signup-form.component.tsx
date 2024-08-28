@@ -4,22 +4,40 @@ import LabelledInput from "../Labelled-input.component";
 import AuthHeader from "./Auth-header.component";
 import { AUTH_TYPE } from "../../utils/Enums";
 import AuthButton from "./Auth-button.component";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const SignupForm = () => {
+  const navigate = useNavigate();
   const [userInputs, setuserInput] = useState<SignupInput>({
+    email: "",
     name: "",
-    username: "",
     password: "",
   });
-  const createUser = () => {};
+  const createUser = () => {
+    axios
+      .post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/signup`,
+        userInputs
+      )
+      .then((response) => {
+        console.log(response);
+        const token = response.data;
+        localStorage.setItem("token", token);
+        navigate("/blogs");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="h-screen flex justify-center flex-col items-center">
       <AuthHeader type={AUTH_TYPE.SIGNUP} />
       <div className=" min-w-10 mt-4">
         <LabelledInput
-          label="Username"
-          placeholder="Enter your username"
+          label="Email"
+          placeholder="Enter your email"
           onChange={(e) =>
-            setuserInput({ ...userInputs, username: e.target.value })
+            setuserInput({ ...userInputs, email: e.target.value })
           }
         />
         <LabelledInput
@@ -37,7 +55,7 @@ const SignupForm = () => {
             setuserInput({ ...userInputs, password: e.target.value })
           }
         />
-        <AuthButton type={AUTH_TYPE.SIGNUP} />
+        <AuthButton type={AUTH_TYPE.SIGNUP} onclickFunc={createUser} />
       </div>
     </div>
   );
