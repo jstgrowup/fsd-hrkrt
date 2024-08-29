@@ -2,32 +2,45 @@ import { useRecoilValue } from "recoil";
 import BlogCard from "../components/Blog/Blog-card.component";
 import Navbar from "../components/Blog/Navbar.component";
 import { UserState } from "../recoil/atoms";
-
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import { Blog } from "../utils/Types-interfaces";
 const Blogs = () => {
   const userToken = useRecoilValue(UserState);
+  const [blogs, setblogs] = useState<Blog[]>([]);
+  const [loading, setloading] = useState<boolean>(false);
+  const token = Cookies.get("token");
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_DEV_BACKEND_URL}/api/v1/blog/get/bulk`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+      .then((response) => {
+        setblogs(response.data.data);
+      })
+      .catch((er) => console.log(er))
+      .finally(() => setloading(false));
+  }, []);
+
   return (
     <>
       <Navbar />
       <div className="flex justify-center">
         <div className="max-w-xl">
-          <BlogCard
-            title="How can Ugly single-page website makes $5000 a Month with affiliate marketing"
-            authorName="Peter V"
-            publishedDate="Dec 3 2023"
-            content="No need to create a fancy and modern website with hundreds of pages to make modeny online makeing only online is the dream fro man  No need to create a fancy and modern website with hundreds of pages to make modeny online makeing only online is the dream fro man...."
-          />
-          <BlogCard
-            title="How can Ugly single-page website makes $5000 a Month with affiliate marketing"
-            authorName="Peter V"
-            publishedDate="Dec 3 2023"
-            content="No need to create a fancy and modern website with hundreds of pages to make modeny online makeing only online is the dream fro man  No need to create a fancy and modern website with hundreds of pages to make modeny online makeing only online is the dream fro man...."
-          />
-          <BlogCard
-            title="How can Ugly single-page website makes $5000 a Month with affiliate marketing"
-            authorName="Peter V"
-            publishedDate="Dec 3 2023"
-            content="No need to create a fancy and modern website with hundreds of pages to make modeny online makeing only online is the dream fro man  No need to create a fancy and modern website with hundreds of pages to make modeny online makeing only online is the dream fro man...."
-          />
+          {blogs.map((blog: Blog) => {
+            return (
+              <BlogCard
+                title={blog.title}
+                authorName={blog.author.name}
+                publishedDate={blog.createdAt}
+                content={blog.content}
+                id={blog.id}
+              />
+            );
+          })}
         </div>
       </div>
     </>

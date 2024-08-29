@@ -66,3 +66,29 @@ userRouter.post("/signin", async (c) => {
     }
   }
 });
+userRouter.post("/me", async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c?.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  try {
+    const body = await c.req.json();
+    const validatedBody = userSigninValidationSchema.parse(body);
+    const user = await prisma.user.findUnique({
+      where: { email: validatedBody.email, password: validatedBody.password },
+    });
+    if (!user) {
+      c.status(403);
+      return c.json({ error: "user not found" });
+    }
+    const token = await sign({ id: user.id }, c?.env.JWT_SECRET);
+    return c.json(token);
+  } catch (error) {
+    if (error instanceof ZodError) {
+      c.status(400);
+      return c.json({ errors: error.errors });
+    } else {
+      c.status(500);
+      return c.json({ message: "Something went wrong during signin" });
+    }
+  }
+});

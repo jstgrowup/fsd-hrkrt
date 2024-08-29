@@ -11,4 +11,15 @@ export interface BlogCardProps {
   title: string;
   content: string;
   publishedDate: string;
+  id: string;
+}
+export interface Blog {
+  authorName: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  author: {
+    name: string;
+  };
+  id: string;
 }

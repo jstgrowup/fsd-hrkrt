@@ -8,6 +8,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { UserState } from "../../recoil/atoms";
+import Cookies from "js-cookie";
 const SignupForm = () => {
   const navigate = useNavigate();
   const setCount = useSetRecoilState(UserState);
@@ -25,8 +26,9 @@ const SignupForm = () => {
       .then((response) => {
         console.log(response);
         const token = response.data;
-        localStorage.setItem("token", token);
+
         setCount(token);
+        Cookies.set("token", token);
         navigate("/blogs");
       })
       .catch((error) => {
