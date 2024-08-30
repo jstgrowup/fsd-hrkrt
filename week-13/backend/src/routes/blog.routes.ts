@@ -18,14 +18,11 @@ blogRouter.use("/*", async (c, next) => {
   }).$extends(withAccelerate());
   try {
     const header = String(c.req.header("Authorization"));
-    console.log("c.req.header:", c.req.header);
-    console.log("header:", header);
     const decodedToken = await verify(header, c.env.JWT_SECRET);
     if (!decodedToken) {
       c.status(403);
       return c.json({ message: "Unauthorized user" });
     }
-    console.log("decodedToken:", decodedToken);
     const userId = String(decodedToken.id);
 
     const foundUser = await prisma.user.findUnique({

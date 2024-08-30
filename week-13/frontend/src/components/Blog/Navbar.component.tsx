@@ -4,7 +4,7 @@ const Navbar = () => {
     <div className="border-b flex justify-between px-10 py-4">
       <div className="font-semibold text-lg flex items-center">Medium</div>
       <div>
-        <BlogCardAvatar name="Subham" size={10} />
+        <BlogCardAvatar name="Subham" size={100} />
       </div>
     </div>
   );
