@@ -13,13 +13,13 @@ export interface BlogCardProps {
   publishedDate: string;
   id: string;
 }
-export interface Blog {
-  authorName: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  author: {
-    name: string;
+export interface BlogType {
+  authorName?: string;
+  title?: string;
+  content?: string;
+  createdAt?: string;
+  author?: {
+    name?: string;
   };
-  id: string;
+  id?: string;
 }
