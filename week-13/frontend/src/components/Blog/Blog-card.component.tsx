@@ -1,13 +1,13 @@
 import React from "react";
 import { Avatar } from "./Avatar.component";
-import { BlogCardProps } from "../../utils/Types-interfaces";
+import type { BlogType } from "../../utils/Types-interfaces";
 import { Link } from "react-router-dom";
 
-const BlogCard: React.FC<BlogCardProps> = ({
+const BlogCard: React.FC<BlogType> = ({
   title,
   authorName,
   content,
-  publishedDate,
+  createdAt,
   id,
 }) => {
   return (
@@ -18,10 +18,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <Avatar size={"big"} name="subham" />
           </div>
           <div className="font-extralight">{authorName}</div>
-          <div className="font-light text-slate-500">.{publishedDate}</div>
+          <div className="font-light text-slate-500">.{createdAt}</div>
         </div>
         <div className="font-semibold text-2xl pt-2">{title}</div>
-        <div className="font-thin text-md">{content.slice(1, 100) + "..."}</div>
+        <div className="font-thin text-md">
+          {content?.slice(1, 100) + "..."}
+        </div>
       </div>
     </Link>
   );

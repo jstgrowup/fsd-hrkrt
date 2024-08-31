@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup.page";
 import SignIn from "./pages/Signin.page";
 import React, { Suspense } from "react";
+import CreateBlog from "./pages/Create-Blog.page";
+
 const Blogs = React.lazy(() => import("./pages/Blogs.page"));
 const IndividualBlog = React.lazy(() => import("./pages/IndividualBlog.page"));
 function App() {
@@ -28,6 +30,7 @@ function App() {
               </Suspense>
             }
           />
+          <Route path="/create-blog" element={<CreateBlog />} />
         </Routes>
       </BrowserRouter>
     </>
