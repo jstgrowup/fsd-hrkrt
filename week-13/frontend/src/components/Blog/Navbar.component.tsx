@@ -8,8 +8,17 @@ const Navbar = () => {
           Medium
         </div>
       </Link>
-      <div>
-        <Avatar size={"big"} name="subham" />
+      <div className="flex gap-4">
+        <div>
+          <Avatar size={"big"} name="subham" />
+        </div>
+        <div>
+          <Link to={"/create-blog"}>
+            <div className="w-32 bg-green-700 text-white font-semibold py-2 px-4 rounded-full hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+              Create Blog
+            </div>
+          </Link>
+        </div>
       </div>
     </div>
   );

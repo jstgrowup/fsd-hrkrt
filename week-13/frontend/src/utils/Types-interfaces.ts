@@ -17,3 +17,22 @@ export interface BlogType {
   };
   id?: string;
 }
+export interface BlogBodyInterface {
+  title: string;
+  content: string;
+  published: boolean;
+  loading?: boolean;
+  error?: string | null;
+  success?: boolean;
+}
+export interface CreatedBlogResponseBody {
+  data: {
+    authorId: string;
+    content: string;
+    createdAt: string;
+    id: string;
+    published: boolean;
+    title: string;
+    updatedAt: string;
+  };
+}

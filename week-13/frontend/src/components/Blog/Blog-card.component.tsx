@@ -15,15 +15,17 @@ const BlogCard: React.FC<BlogType> = ({
       <div className="border-b border-slate-400 pb-4 pt-4">
         <div className="flex gap-3">
           <div className="flex justify-between items-center ">
-            <Avatar size={"big"} name="subham" />
+            <Avatar size={"small"} name="subham" />
           </div>
           <div className="font-extralight">{authorName}</div>
           <div className="font-light text-slate-500">.{createdAt}</div>
         </div>
         <div className="font-semibold text-2xl pt-2">{title}</div>
-        <div className="font-thin text-md">
-          {content?.slice(1, 100) + "..."}
-        </div>
+
+        <div
+          className="font-thin text-md"
+          dangerouslySetInnerHTML={{ __html: content ?? "" }}
+        />
       </div>
     </Link>
   );

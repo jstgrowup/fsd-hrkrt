@@ -3,23 +3,21 @@ import type { BlogType } from "../../utils/Types-interfaces";
 import Navbar from "./Navbar.component";
 import { Avatar } from "./Avatar.component";
 
-const Blog: React.FC<BlogType> = ({
-  content,
-  title,
-
-  createdAt,
-  author,
-}) => {
+const Blog: React.FC<BlogType> = ({ content, title, createdAt, author }) => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-12 px-16 w-full ">
+      <div className="grid grid-cols-12 px-16 w-full pt-5">
         <div className="  col-span-8 flex flex-col gap-4">
           <div className="text-5xl font-extrabold">{title}</div>
           <div className="text-slate-400 font-semibold">
             Posted on {createdAt}
           </div>
-          <div className="text-gray-500">{content}</div>
+
+          <div
+            className="font-thin text-md"
+            dangerouslySetInnerHTML={{ __html: content ?? "" }}
+          />
         </div>
         <div className="  col-span-4">
           <div className="font-semibold text-lg">Author</div>
