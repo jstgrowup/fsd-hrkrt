@@ -17,9 +17,7 @@ export interface BlogType {
   };
   id?: string;
 }
-export interface BlogBodyInterface {
-  title: string;
-  content: string;
+export interface BlogBodyInterface extends BlogType {
   published: boolean;
   loading?: boolean;
   error?: string | null;

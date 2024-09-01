@@ -4,15 +4,14 @@ import Navbar from "../components/Blog/Navbar.component";
 import { blogsAtomState } from "../recoil/blog.atom";
 
 import type { BlogType } from "../utils/Types-interfaces";
-import { UserState } from "../recoil/atoms";
+
 const Blogs = () => {
-  const userToken = useRecoilValue(UserState);
   const recoilBlogs = useRecoilValue(blogsAtomState);
   return (
     <>
       <Navbar />
       <div className="flex justify-center">
-        <div className="max-w-xl">
+        <div>
           {recoilBlogs.map((blog: BlogType) => {
             return (
               <BlogCard

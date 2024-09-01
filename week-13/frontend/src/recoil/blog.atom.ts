@@ -1,13 +1,11 @@
 import axios from "axios";
 import { atom, atomFamily, selector, selectorFamily } from "recoil";
 import Cookies from "js-cookie";
-import {
-  BlogBodyInterface,
-  CreatedBlogResponseBody,
-} from "../utils/Types-interfaces";
+import { BlogBodyInterface } from "../utils/Types-interfaces";
 export const blogAtomState = atom<BlogBodyInterface>({
   key: "blogState",
   default: {
+    id: "",
     title: "",
     content: "",
     published: false,
@@ -35,7 +33,7 @@ export const blogsAtomState = atom({
   }),
 });
 export const blogAtomFamily = atomFamily({
-  key: "blogAtomFamily",
+  key: "blogAtomFamilyForSelector",
   default: selectorFamily({
     key: "blogSelectorFamily",
     get: (id?: string) => async () => {
@@ -52,50 +50,15 @@ export const blogAtomFamily = atomFamily({
     },
   }),
 });
-export const createBlogSelector = selector({
-  key: "createBlogSelector",
-  get: ({ get }) => get(blogAtomState),
-  set: ({ set }, newBlog: BlogBodyInterface | any) => {
-    const { title, content, published } = newBlog;
-    const token = Cookies.get("token");
 
-    set(blogAtomState, (prevState) => ({
-      ...prevState,
-      title,
-      content,
-      published,
-      loading: true,
-      error: null,
-      success: false,
-    }));
-    axios
-      .post(
-        `${import.meta.env.VITE_DEV_BACKEND_URL}/api/v1/blog/create`,
-        { title, content },
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
-      .then((response: CreatedBlogResponseBody) => {
-        set(blogAtomState, {
-          title: response.data.title,
-          content: response.data.content,
-          published: response.data.published,
-          loading: false,
-          error: null,
-          success: true,
-        });
-      })
-      .catch((error) => {
-        set(blogAtomState, (prevState) => ({
-          ...prevState,
-          loading: false,
-          published: false,
-          error: error.response?.data?.message || "Failed to create blog",
-          success: false,
-        }));
-      });
-  },
-});
+export const createBlogAPI = (blog: BlogBodyInterface, token: string) => {
+  return axios.post(
+    `${import.meta.env.VITE_DEV_BACKEND_URL}/api/v1/blog/create`,
+    blog,
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+};

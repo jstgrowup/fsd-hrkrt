@@ -78,6 +78,7 @@ blogRouter.get("/:id", async (c) => {
   }).$extends(withAccelerate());
   try {
     const blogId = c.req.param("id");
+    console.log("blogId:", blogId);
     const foundBlog = await prisma.post.findUnique({
       where: {
         id: blogId,
@@ -94,7 +95,8 @@ blogRouter.get("/:id", async (c) => {
         },
       },
     });
-    return c.json({ data: foundBlog });
+    console.log("foundBlog:", foundBlog);
+    return c.json(foundBlog);
   } catch (error) {
     c.status(411);
     return c.json({

@@ -4,6 +4,7 @@ import Signup from "./pages/Signup.page";
 import SignIn from "./pages/Signin.page";
 import React, { Suspense } from "react";
 import CreateBlog from "./pages/Create-Blog.page";
+import BlogSkeleton from "./components/Blog/Blog-skeleton.component";
 
 const Blogs = React.lazy(() => import("./pages/Blogs.page"));
 const IndividualBlog = React.lazy(() => import("./pages/IndividualBlog.page"));
@@ -17,7 +18,7 @@ function App() {
           <Route
             path="/blogs"
             element={
-              <Suspense fallback={"Loading..."}>
+              <Suspense fallback={<BlogSkeleton />}>
                 <Blogs />
               </Suspense>
             }
@@ -25,7 +26,7 @@ function App() {
           <Route
             path="/blog/:id"
             element={
-              <Suspense fallback={"Loading..."}>
+              <Suspense fallback={<BlogSkeleton />}>
                 <IndividualBlog />
               </Suspense>
             }
