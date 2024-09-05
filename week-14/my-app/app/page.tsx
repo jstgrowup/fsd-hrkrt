@@ -2,9 +2,7 @@ import axios from "axios";
 
 async function getUserData() {
   await new Promise((r) => setTimeout(r, 4000));
-  const response = await axios.get(
-    "https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details"
-  );
+  const response = await axios.get("http://localhost:3000/api/user");
   return response.data;
 }
 // it will call teh api in the server itself

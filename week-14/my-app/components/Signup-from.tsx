@@ -4,6 +4,7 @@ import { useState } from "react";
 import LabelledInput from "./Labelled-input";
 import AuthHeader from "./Auth-header";
 import AuthButton from "./Auth-button";
+import axios from "axios";
 
 const SignupForm = () => {
   const [userInputs, setuserInput] = useState<any>({
@@ -11,6 +12,16 @@ const SignupForm = () => {
     name: "",
     password: "",
   });
+  const handleSubmitForm = () => {
+    axios
+      .post("http://localhost:3000/api/user", userInputs)
+      .then((response) => {
+        console.log("response:", response);
+      })
+      .catch((error) => {
+        console.log("error:", error);
+      });
+  };
   return (
     <div className="h-screen flex justify-center flex-col items-center">
       <AuthHeader type={AUTH_TYPE.SIGNUP} />
@@ -37,7 +48,7 @@ const SignupForm = () => {
             setuserInput({ ...userInputs, password: e.target.value })
           }
         />
-        <AuthButton type={AUTH_TYPE.SIGNUP} />
+        <AuthButton type={AUTH_TYPE.SIGNUP} onclickFunc={handleSubmitForm} />
       </div>
     </div>
   );
