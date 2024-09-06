@@ -14,8 +14,20 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String  @id @default(uuid())
   name     String
-  email    String @unique
+  email    String  @unique
   password String
+  blogs    Blogs[]
+}
+
+model Blogs {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
 }

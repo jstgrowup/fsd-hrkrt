@@ -4,7 +4,7 @@ import { useState } from "react";
 import LabelledInput from "./Labelled-input";
 import AuthHeader from "./Auth-header";
 import AuthButton from "./Auth-button";
-import axios from "axios";
+import { SingupServerAction } from "@/app/actions/user";
 
 const SignupForm = () => {
   const [userInputs, setuserInput] = useState<any>({
@@ -13,8 +13,7 @@ const SignupForm = () => {
     password: "",
   });
   const handleSubmitForm = () => {
-    axios
-      .post("http://localhost:3000/api/user", userInputs)
+    SingupServerAction(userInputs.name, userInputs.password, userInputs.email)
       .then((response) => {
         console.log("response:", response);
       })
