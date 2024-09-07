@@ -4,7 +4,6 @@ import { useState } from "react";
 import LabelledInput from "./Labelled-input";
 import AuthHeader from "./Auth-header";
 import AuthButton from "./Auth-button";
-import { SingupServerAction } from "@/app/actions/user";
 
 const SignupForm = () => {
   const [userInputs, setuserInput] = useState<any>({
@@ -12,15 +11,7 @@ const SignupForm = () => {
     name: "",
     password: "",
   });
-  const handleSubmitForm = () => {
-    SingupServerAction(userInputs.name, userInputs.password, userInputs.email)
-      .then((response) => {
-        console.log("response:", response);
-      })
-      .catch((error) => {
-        console.log("error:", error);
-      });
-  };
+  const handleSubmitForm = () => {};
   return (
     <div className="h-screen flex justify-center flex-col items-center">
       <AuthHeader type={AUTH_TYPE.SIGNUP} />
