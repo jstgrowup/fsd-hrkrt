@@ -6,12 +6,13 @@ import AuthHeader from "./Auth-header";
 import AuthButton from "./Auth-button";
 
 const SignupForm = () => {
-  const [userInputs, setuserInput] = useState<any>({
+  const [userInputs, setuserInput] = useState({
     email: "",
     name: "",
     password: "",
   });
-  const handleSubmitForm = () => {};
+
+  const handleSubmitForm = async () => {};
   return (
     <div className="h-screen flex justify-center flex-col items-center">
       <AuthHeader type={AUTH_TYPE.SIGNUP} />
@@ -19,14 +20,14 @@ const SignupForm = () => {
         <LabelledInput
           label="Email"
           placeholder="Enter your email"
-          onChange={(e) =>
+          onChange={(e: { target: { value: any } }) =>
             setuserInput({ ...userInputs, email: e.target.value })
           }
         />
         <LabelledInput
           label="Name"
           placeholder="Enter your name"
-          onChange={(e) =>
+          onChange={(e: { target: { value: any } }) =>
             setuserInput({ ...userInputs, name: e.target.value })
           }
         />
@@ -34,7 +35,7 @@ const SignupForm = () => {
           label="Password"
           placeholder="Enter your password"
           type="password"
-          onChange={(e) =>
+          onChange={(e: { target: { value: any } }) =>
             setuserInput({ ...userInputs, password: e.target.value })
           }
         />

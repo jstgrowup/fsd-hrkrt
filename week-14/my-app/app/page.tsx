@@ -1,18 +1,26 @@
-import client from "@/db";
-async function getUserData() {
-  const user = await client.user.findFirst();
-  return {
-    email: user?.email,
-    name: user?.name,
-  };
-}
-// it will call teh api in the server itself
+import BlogCard from "@/components/Blog-card";
+import { BlogType } from "@/utils/types.ts/blogs.types";
+
 export default async function Home() {
-  const userDetails = await getUserData();
+  const recoilBlogs: BlogType[] = [];
   return (
-    <div>
-      {userDetails.email}
-      {userDetails.name}
-    </div>
+    <>
+      <div className="flex justify-center">
+        <div>
+          {recoilBlogs?.map((blog: BlogType) => {
+            return (
+              <BlogCard
+                key={blog.id}
+                title={blog.title}
+                authorName={blog?.author?.name}
+                createdAt={blog?.createdAt}
+                content={blog.content}
+                id={blog.id}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </>
   );
 }
