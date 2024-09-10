@@ -1,10 +1,12 @@
 import BlogCard from "@/components/Blog-card";
+import Navbar from "@/components/Navbar";
 import { BlogType } from "@/utils/types.ts/blogs.types";
 
 export default async function Home() {
   const recoilBlogs: BlogType[] = [];
   return (
     <>
+      <Navbar />
       <div className="flex justify-center">
         <div>
           {recoilBlogs?.map((blog: BlogType) => {

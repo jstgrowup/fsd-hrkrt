@@ -4,15 +4,19 @@ import { useState } from "react";
 import LabelledInput from "./Labelled-input";
 import AuthHeader from "./Auth-header";
 import AuthButton from "./Auth-button";
+import { SignupPayloadType } from "@/utils/types.ts/user.types";
+import { useAuthStore } from "@/store";
 
 const SignupForm = () => {
-  const [userInputs, setuserInput] = useState({
+  const [userInputs, setuserInput] = useState<SignupPayloadType>({
     email: "",
     name: "",
     password: "",
   });
-
-  const handleSubmitForm = async () => {};
+  const signupAction = useAuthStore((state) => state.signUpAction);
+  const handleSubmitForm = () => {
+    signupAction(userInputs);
+  };
   return (
     <div className="h-screen flex justify-center flex-col items-center">
       <AuthHeader type={AUTH_TYPE.SIGNUP} />
