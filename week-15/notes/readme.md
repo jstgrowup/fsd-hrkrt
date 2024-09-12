@@ -9,3 +9,4 @@
 8. docker run -p 27017:27017 -d mongo (this is called as port mapping)
 9. docker kill <container id>
 10. docker rmi mongo --force (this will remove the image as well)
+11. docker build -t medium-backend . (after making the dockerfile execute this command which will sart the container)
