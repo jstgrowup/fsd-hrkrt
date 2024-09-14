@@ -11,3 +11,5 @@
 10. docker rmi mongo --force (this will remove the image as well)
 11. docker build -t medium-backend . (after making the dockerfile execute this command which will sart the container)
 12. docker build -t medium-backend . (once the docker file is ready this command will build the image from the docker file)
+13. docker run -p 8001:8001 -e DATABASE_URL="" -e JWT_SECRET="" paytm-backend
+14. docker exec -it <container number> /bin/sh (by this command you can interact with the container)
