@@ -11,6 +11,7 @@ app.use(
     origin: "*",
   })
 );
+console.log("herehr hurheuhrue");
 
 app.use("/api/v1", router);
 app.get("/", async (req, res) => {
