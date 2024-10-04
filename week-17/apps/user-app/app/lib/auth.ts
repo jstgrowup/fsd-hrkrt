@@ -30,7 +30,7 @@ export const authOptions = {
             number: credentials.phone,
           },
         });
-        console.log("existingUser:", existingUser);
+
         if (existingUser) {
           const passwordValidation = await bcrypt.compare(
             credentials.password,

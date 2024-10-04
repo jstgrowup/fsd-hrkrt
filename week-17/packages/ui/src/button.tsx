@@ -1,12 +1,5 @@
 "use client";
-
-import { ReactNode } from "react";
-
-interface ButtonProps {
-  children: ReactNode;
-  onClick: () => void;
-}
-
+import { ButtonProps } from "./utils/types";
 export const Button = ({ onClick, children }: ButtonProps) => {
   return (
     <button
