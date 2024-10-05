@@ -9,15 +9,19 @@ const Dashboard = () => {
     <div className="flex">
       <div className="w-72 border-r border-slate-300 min-h-screen mr-4 pt-28">
         <div>
-          <SidebarItem href={"/dashboard"} icon={<HomeIcon />} title="Home" />
+          <SidebarItem
+            href={"/dashboard"}
+            icon={"/homeicon.svg"}
+            title="Home"
+          />
           <SidebarItem
             href={"/transfer"}
-            icon={<TransferIcon />}
+            icon={"/transfericon.svg"}
             title="Transfer"
           />
           <SidebarItem
             href={"/transactions"}
-            icon={<TransactionsIcon />}
+            icon={"/transactionicon.svg"}
             title="Transactions"
           />
         </div>
