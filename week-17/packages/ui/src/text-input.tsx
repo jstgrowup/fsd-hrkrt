@@ -1,24 +1,19 @@
-"use client";
-
 export const TextInput = ({
   placeholder,
   onChange,
   label,
 }: {
   placeholder: string;
-  onChange: (value: string) => void;
+  onChange: (e: { target: { value: any } }) => void;
   label: string;
 }) => {
   return (
     <div className="pt-2">
-      <label className="block mb-2 text-sm font-medium text-gray-900">
-        {label}
-      </label>
+      <label className="block text-sm font-medium text-gray-700">{label}</label>
       <input
-        onChange={(e) => onChange(e.target.value)}
+        onChange={onChange}
         type="text"
-        id="first_name"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        className="rounded-xl w-full px-4 py-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
         placeholder={placeholder}
       />
     </div>

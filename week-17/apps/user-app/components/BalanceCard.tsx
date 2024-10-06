@@ -1,5 +1,3 @@
-import { Card } from "@repo/ui/card";
-
 export const BalanceCard = ({
   amount,
   locked,
@@ -8,7 +6,10 @@ export const BalanceCard = ({
   locked: number;
 }) => {
   return (
-    <Card title={"Balance"}>
+    <div className="w-full  mx-auto bg-white rounded-xl md:rounded-xl flex flex-col gap-3 p-4 md:p-5">
+      <h2 className="flex items-center gap-2 text-xl font-semibold text-gray-800">
+        Balance
+      </h2>
       <div className="flex justify-between border-b border-slate-300 pb-2">
         <div>Unlocked balance</div>
         <div>{amount / 100} INR</div>
@@ -21,6 +22,6 @@ export const BalanceCard = ({
         <div>Total Balance</div>
         <div>{(locked + amount) / 100} INR</div>
       </div>
-    </Card>
+    </div>
   );
 };
