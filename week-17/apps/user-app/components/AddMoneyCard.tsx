@@ -5,13 +5,19 @@ import { Select } from "@repo/ui/select";
 import { TextInput } from "@repo/ui/textinput";
 import { PlusCircle } from "lucide-react";
 import { OnRampInterface } from "@repo/utils/types";
+import { useTransferStore } from "@/store/transfer";
 const AddMoneyCard = () => {
-  const handleSubmit = () => {};
+  const createTransactionAction = useTransferStore(
+    (store) => store.createTransactionStoreAction
+  );
   const [moneyInputs, setmoneyInput] = useState<OnRampInterface>({
     amount: "",
     bank: "",
   });
-  console.log("moneyInputs:", moneyInputs);
+  const handleSubmit = () => {
+    createTransactionAction(moneyInputs.amount, moneyInputs.bank);
+  };
+
   return (
     <div className="w-full  mx-auto bg-white rounded-xl md:rounded-xl ">
       <div className="p-6 border-b border-gray-200">

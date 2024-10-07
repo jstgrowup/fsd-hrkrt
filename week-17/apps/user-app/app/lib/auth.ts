@@ -25,6 +25,7 @@ export const authOptions = {
         if (!validatedResult.success) {
           return null;
         }
+      
         const existingUser = await db.user.findFirst({
           where: {
             number: credentials.phone,

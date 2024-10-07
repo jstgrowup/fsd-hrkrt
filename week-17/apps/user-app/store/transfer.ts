@@ -1,16 +1,21 @@
+import { createOnRampTransactions } from "@/app/lib/actions/onRampTransactions";
+import { TransferStoreType } from "@repo/utils/types";
 import { create } from "zustand";
-
-export const useTransferStore = create((set) => ({
+export const useTransferStore = create<TransferStoreType>((set) => ({
   loading: false,
+  message: "",
   blogs: [],
   error: null,
   data: null,
-  bulkBlogsAction: async () => {
+  createTransactionStoreAction: async (amount: string, provider: string) => {
     set({ loading: true, error: null });
     try {
-      //   const allBlogs = await fetchBulkBlogs();
-      //   set({ blogs: allBlogs.data, loading: false });
-      //   return allBlogs;
+      const createdTransaction = await createOnRampTransactions(
+        Number(amount),
+        provider
+      );
+      set({ loading: false, message: createdTransaction?.message });
+      return true;
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }
