@@ -1,6 +1,31 @@
 "use client";
+import { useState } from "react";
 import { Appbar } from "../Appbar";
-export const AuthForm = () => {
+import { useFormik } from "formik";
+import {
+  authFormSchema,
+  formikInitialValuesforAuth,
+} from "../formik/auth.formik";
+import PasswordInput from "./password-input";
+export const AuthForm = ({
+  signIn,
+}: {
+  signIn: (type: string, options: any) => void;
+}) => {
+  const [login, setlogin] = useState<boolean>(false);
+  const { handleChange, handleSubmit, values, errors, touched } = useFormik({
+    initialValues: formikInitialValuesforAuth,
+    validationSchema: authFormSchema,
+    onSubmit: async () => {
+      console.log("async:");
+      const result = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+      });
+      console.log("result:", result);
+    },
+  });
+
   return (
     <>
       <Appbar />
@@ -10,43 +35,79 @@ export const AuthForm = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900">
                   Your email
                 </label>
                 <input
-                  type="email"
+                  value={values.email}
+                  onChange={handleChange}
                   name="email"
-                  id="email"
                   className="bg-white border rounded-xl border-gray-300 text-gray-900 text-sm  block w-full p-2.5 "
                   placeholder="name@company.com"
                 />
+                {touched.email && errors.email && errors.email ? (
+                  <p className="text-sm font-normal text-red-600">
+                    {errors.email}
+                  </p>
+                ) : null}
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <PasswordInput
+                  value={values.password}
+                  onChange={handleChange}
+                  name="password"
+                  label="Password"
+                  error={touched.password ? errors.password : undefined}
+                />
+                {/* <label className="block mb-2 text-sm font-medium text-gray-900 ">
                   Password
                 </label>
                 <input
+                  value={values.password}
+                  onChange={handleChange}
                   type="password"
                   name="password"
-                  id="password"
                   placeholder="••••••••"
                   className="bg-white border rounded-xl border-gray-300 text-gray-900 text-sm block w-full p-2.5 "
                 />
+                <EyeOff />
+                <Eye />
+                {errors.password && errors.password ? (
+                  <p className="text-sm font-normal text-red-600">
+                    {errors.password}
+                  </p>
+                ) : null} */}
               </div>
-              <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  Confirm password
-                </label>
-                <input
-                  type="confirm-password"
-                  name="confirm-password"
-                  id="confirm-password"
-                  placeholder="••••••••"
-                  className="bg-white border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-2.5 "
+              {!login && (
+                <PasswordInput
+                  value={values.confirmPassword}
+                  onChange={handleChange}
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  error={
+                    touched.confirmPassword ? errors.confirmPassword : undefined
+                  }
                 />
-              </div>
+                // <div>
+                //   <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                //     Confirm password
+                //   </label>
+                //   <input
+                //     value={values.confirmPassword}
+                //     name="confirmPassword"
+                //     onChange={handleChange}
+                //     placeholder="••••••••"
+                //     className="bg-white border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-2.5 "
+                //   />
+                //   {errors.confirmPassword && errors.confirmPassword ? (
+                //     <p className="text-sm font-normal text-red-600">
+                //       {errors.confirmPassword}
+                //     </p>
+                //   ) : null}
+                // </div>
+              )}
               <div className="mt-6 grid grid-cols-3 gap-3">
                 <div>
                   <div className="w-full flex items-center justify-center px-8 py-3 border border-gray-300 rounded-xl shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 ">
@@ -96,17 +157,17 @@ export const AuthForm = () => {
                 type="submit"
                 className="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none  font-medium rounded-xl text-sm px-5 py-2.5 text-center "
               >
-                Create an account
+                {login ? "Login" : "Signup"}
               </button>
-              <p className="text-sm font-light text-gray-500">
-                Already have an account?{" "}
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:underline"
+              <div className="text-sm font-light text-gray-500 flex gap-2">
+                {login ? " Dont have an account?" : " Already have an account?"}{" "}
+                <p
+                  onClick={() => setlogin(!login)}
+                  className="font-medium text-primary-600 hover:underline cursor-pointer"
                 >
-                  Login here
-                </a>
-              </p>
+                  {login ? "Signup" : "Login"}
+                </p>
+              </div>
             </form>
           </div>
         </div>

@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { User, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
+
 interface AppbarProps {
   user?: {
     name?: string | null;
   };
-  onSignin?: any;
-  onSignout?: any;
 }
 
-export const Appbar = ({ user, onSignin, onSignout }: AppbarProps) => {
+export const Appbar = ({ user }: AppbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const router = useRouter();
+  const onRedirect = () => router.push("/auth");
   return (
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,7 +26,7 @@ export const Appbar = ({ user, onSignin, onSignout }: AppbarProps) => {
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <button
-              onClick={user ? onSignout : onSignin}
+              onClick={onRedirect}
               className="rounded-xl bg-blue-500 hover:bg-blue-600 text-white text-md font-medium px-14 py-3"
             >
               {user ? "Logout" : "Login"}

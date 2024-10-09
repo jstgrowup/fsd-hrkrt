@@ -8,3 +8,9 @@ export type TransferStoreType = {
   message: string;
   createTransactionStoreAction: (amount: string, provider: string) => void;
 };
+export type AuthStoreType = {
+  loading: boolean;
+  error: string | null;
+  message: string;
+  signUp: (amount: string, provider: string) => void;
+};

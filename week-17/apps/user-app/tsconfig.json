@@ -16,7 +16,8 @@
     "next.config.js",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../../packages/store/src/transfer.ts"
   ],
   "exclude": ["node_modules"]
 }

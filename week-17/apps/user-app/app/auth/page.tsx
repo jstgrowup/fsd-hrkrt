@@ -1,9 +1,11 @@
+"use client";
 import { AuthForm } from "@repo/ui/auth";
+import { signIn } from "next-auth/react";
 import React from "react";
 const Auth = () => {
   return (
     <>
-      <AuthForm />;
+      <AuthForm signIn={signIn} />;
     </>
   );
 };
