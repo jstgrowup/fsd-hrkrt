@@ -18,9 +18,9 @@ export const SidebarItem = ({ href, title, icon: Icon }: SidebarItemProps) => {
         router.push(href);
       }}
     >
-      <div className="pr-2">{Icon && <Icon />}</div>
+      <div className="pr-2 text-[#6a51a6]">{Icon && <Icon />}</div>
       <div
-        className={`font-bold ${selected ? "text-[#6a51a6]" : "text-slate-500"}`}
+        className={`font-bold ${selected ? "text-[#6a51a6]" : "text-[#6a51a6]"}`}
       >
         {title}
       </div>

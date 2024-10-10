@@ -1,8 +1,9 @@
-import Dashboard from "./dashboard/page";
+import Dashboard from "../components/Dashboard";
+
 export default function Page(): JSX.Element {
   return (
-    <div>
+    <>
       <Dashboard />
-    </div>
+    </>
   );
 }

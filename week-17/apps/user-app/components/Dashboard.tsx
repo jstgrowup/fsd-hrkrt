@@ -4,11 +4,9 @@ import { BalanceCard } from "@/components/BalanceCard";
 import { OnRampTransactions } from "@/components/OnRampTransaction";
 import { SidebarItem } from "@/components/SidebarItem";
 import { DashboardSidebar } from "@/lib/dashboardSidebar";
-import { Appbar } from "@repo/ui/appbar";
 const Dashboard = () => {
   return (
     <>
-      <Appbar />
       <div className="flex bg-violet-100">
         <div className="border-r border-slate-300 min-h-screen  flex flex-col gap-2 p-5">
           {DashboardSidebar.map((item, index) => {

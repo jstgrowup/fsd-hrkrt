@@ -17,7 +17,6 @@ export const AuthForm = ({
     initialValues: formikInitialValuesforAuth,
     validationSchema: authFormSchema,
     onSubmit: async () => {
-      console.log("async:");
       const result = await signIn("credentials", {
         email: values.email,
         password: values.password,
@@ -28,14 +27,13 @@ export const AuthForm = ({
 
   return (
     <>
-      <Appbar />
-      <div className="flex flex-col items-center justify-center px-2 py-8">
-        <div className="w-full  md:mt-0 sm:max-w-md xl:p-0 rounded-xl border-spacing-10 shadow-md border">
+      <div className="flex flex-col items-center justify-center px-2 py-8 bg-violet-100">
+        <div className="w-full  md:mt-0 sm:max-w-md xl:p-0 rounded-xl border-spacing-10 shadow-md border bg-white">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-4 md:space-y-6 bg" onSubmit={handleSubmit}>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900">
                   Your email
@@ -160,7 +158,7 @@ export const AuthForm = ({
                 {login ? "Login" : "Signup"}
               </button>
               <div className="text-sm font-light text-gray-500 flex gap-2">
-                {login ? " Dont have an account?" : " Already have an account?"}{" "}
+                {login ? " Dont have an account?" : " Already have an account?"}
                 <p
                   onClick={() => setlogin(!login)}
                   className="font-medium text-primary-600 hover:underline cursor-pointer"

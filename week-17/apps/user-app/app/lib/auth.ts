@@ -10,22 +10,38 @@ export const authOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      // JU368GQTCR7HUA4HWNFZKUTC
       async authorize(credentials: any) {
-        console.log("credentials:", credentials);
         const validatedResult = signupSchema.safeParse(credentials);
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Please enter your email and password");
+        }
         // if (!validatedResult.success) {
         //   return null;
+        const user = {
+          id: "1",
+          email: credentials.email,
+          password: credentials.password,
+        };
 
-        return null;
+        if (!user) {
+          throw new Error("No user found");
+        }
+
+        return user;
       },
     }),
   ],
   secret: process.env.JWT_SECRET || "secret",
   callbacks: {
     async session({ token, session }: any) {
-      session.user.id = token.sub;
+      session.user = token;
       return session;
+    },
+    async redirect({ url, baseUrl }: any) {
+      if (url.startsWith(baseUrl)) {
+        return "/";
+      }
+      return baseUrl;
     },
   },
 };
