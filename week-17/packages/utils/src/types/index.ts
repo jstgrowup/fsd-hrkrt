@@ -14,3 +14,12 @@ export type AuthStoreType = {
   message: string;
   signUp: (amount: string, provider: string) => void;
 };
+export interface AuthUserInterface {
+  email: string;
+  password: string;
+}
+export interface AuthUserResponseInterface {
+  id: string;
+  email?: string;
+  password?: string;
+}

@@ -1,6 +1,5 @@
 "use client";
-import { User, LogOut } from "lucide-react";
-
+import { User } from "lucide-react";
 interface AppbarProps {
   user?: any;
   onRedirect?: () => void;
@@ -11,7 +10,10 @@ export const Appbar = ({ user, onRedirect, onSignout }: AppbarProps) => {
     <nav className="bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
-          <div className="flex justify-center items-center">
+          <div
+            className="flex justify-center items-center cursor-pointer"
+            onClick={onRedirect}
+          >
             <img
               src="https://pwebassets.paytm.com/commonwebassets/paytmweb/header/images/logo.svg"
               alt="paytm"
@@ -29,26 +31,8 @@ export const Appbar = ({ user, onRedirect, onSignout }: AppbarProps) => {
             <div className="ml-3 relative">
               {user && (
                 <button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                  <span className="sr-only">Open user menu</span>
                   <User className="h-8 w-8 rounded-full" />
                 </button>
-              )}
-
-              {user && (
-                <div className="rounded origin-top-right absolute right-0 mt-2 w-48  shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    <User className="inline-block mr-2 h-5 w-5" /> Profile
-                  </a>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    <LogOut className="inline-block mr-2 h-5 w-5" /> Sign out
-                  </a>
-                </div>
               )}
             </div>
           </div>

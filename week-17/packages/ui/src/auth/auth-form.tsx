@@ -2,11 +2,9 @@
 import { useState } from "react";
 import { Appbar } from "../Appbar";
 import { useFormik } from "formik";
-import {
-  authFormSchema,
-  formikInitialValuesforAuth,
-} from "../formik/auth.formik";
+import { formikInitialValuesforAuth } from "../formik/auth.formik";
 import PasswordInput from "./password-input";
+import { authFormSchema } from "@repo/validation/schema";
 export const AuthForm = ({
   signIn,
 }: {
@@ -27,7 +25,7 @@ export const AuthForm = ({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center px-2 py-8 bg-violet-100">
+      <div className="flex flex-col items-center justify-center px-2 py-8 bg-violet-100 min-h-screen">
         <div className="w-full  md:mt-0 sm:max-w-md xl:p-0 rounded-xl border-spacing-10 shadow-md border bg-white">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">

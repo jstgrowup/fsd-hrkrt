@@ -1,8 +1,10 @@
 import db from "@repo/db/client";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import { signupSchema } from "@repo/zod/schema";
-export const authOptions = {
+import type { AuthUserResponseInterface } from "@repo/utils/types";
+import { AuthOptions } from "next-auth";
+import { User } from "next-auth";
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Email",
@@ -10,27 +12,59 @@ export const authOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any) {
-        const validatedResult = signupSchema.safeParse(credentials);
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Please enter your email and password");
+      async authorize(
+        credentials: Record<"email" | "password", string> | undefined
+      ): Promise<AuthUserResponseInterface | any> {
+        try {
+          if (!credentials?.email || !credentials?.password) {
+            throw new Error("Please provide both email and password");
+          }
+          const foundUser = await db.user.findFirst({
+            where: {
+              email: credentials.email,
+            },
+          });
+          if (foundUser) {
+            const decryptedPassword = await bcrypt.compare(
+              credentials.password,
+              foundUser.password
+            );
+            if (decryptedPassword) {
+              return {
+                id: String(foundUser.id),
+                email: foundUser?.email ?? "",
+                password: foundUser.password,
+              };
+            } else {
+              throw new Error("Wrong password please try again");
+            }
+          } else {
+            const encryptedPass = await bcrypt.hash(credentials.password, 10);
+            const createdUser = await db.user.create({
+              data: {
+                email: credentials.email,
+                password: encryptedPass,
+              },
+            });
+            if (createdUser) {
+              return {
+                email: createdUser.email,
+                password: createdUser.password,
+              };
+            } else {
+              throw new Error(
+                "Something went wrong while creating your account please try again later"
+              );
+            }
+          }
+        } catch (error) {
+          console.log("error:", error);
+          throw new Error("Internal server error");
         }
-        // if (!validatedResult.success) {
-        //   return null;
-        const user = {
-          id: "1",
-          email: credentials.email,
-          password: credentials.password,
-        };
-
-        if (!user) {
-          throw new Error("No user found");
-        }
-
-        return user;
       },
     }),
   ],
+  // SecureP@ss123
   secret: process.env.JWT_SECRET || "secret",
   callbacks: {
     async session({ token, session }: any) {

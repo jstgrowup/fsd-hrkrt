@@ -1,8 +1,9 @@
 {
-  "name": "@repo/zod",
+  "name": "@repo/validation",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "yup": "^1.4.0",
     "zod": "^3.23.8"
   },
   "exports": {

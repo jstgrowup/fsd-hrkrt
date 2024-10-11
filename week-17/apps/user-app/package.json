@@ -12,7 +12,7 @@
     "@repo/store": "*",
     "@repo/ui": "*",
     "@repo/utils": "*",
-    "@repo/zod": "*",
+    "@repo/validation": "*",
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",

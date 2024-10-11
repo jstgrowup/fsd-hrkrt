@@ -29,8 +29,10 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@repo/validation": "*",
     "formik": "^2.4.6",
     "lucide-react": "^0.446.0",
+    "react-hot-toast": "^2.4.1",
     "yup": "^1.4.0"
   }
 }
