@@ -3,7 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import type { AuthUserResponseInterface } from "@repo/utils/types";
 import { AuthOptions } from "next-auth";
-import { User } from "next-auth";
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
@@ -24,19 +23,20 @@ export const authOptions: AuthOptions = {
               email: credentials.email,
             },
           });
+
           if (foundUser) {
             const decryptedPassword = await bcrypt.compare(
               credentials.password,
               foundUser.password
             );
-            if (decryptedPassword) {
+
+            if (!decryptedPassword) {
+              throw new Error("Wrong password, please try again");
+            } else {
               return {
                 id: String(foundUser.id),
                 email: foundUser?.email ?? "",
-                password: foundUser.password,
               };
-            } else {
-              throw new Error("Wrong password please try again");
             }
           } else {
             const encryptedPass = await bcrypt.hash(credentials.password, 10);
@@ -48,8 +48,8 @@ export const authOptions: AuthOptions = {
             });
             if (createdUser) {
               return {
+                id: String(createdUser.id),
                 email: createdUser.email,
-                password: createdUser.password,
               };
             } else {
               throw new Error(
@@ -57,25 +57,20 @@ export const authOptions: AuthOptions = {
               );
             }
           }
-        } catch (error) {
-          console.log("error:", error);
-          throw new Error("Internal server error");
+        } catch (error: any) {
+          throw new Error(
+            error.message || "An error occurred during authentication"
+          );
         }
       },
     }),
   ],
-  // SecureP@ss123
+
   secret: process.env.JWT_SECRET || "secret",
   callbacks: {
     async session({ token, session }: any) {
       session.user = token;
       return session;
-    },
-    async redirect({ url, baseUrl }: any) {
-      if (url.startsWith(baseUrl)) {
-        return "/";
-      }
-      return baseUrl;
     },
   },
 };

@@ -6,10 +6,10 @@
     "./button": "./src/button.tsx",
     "./code": "./src/code.tsx",
     "./appbar": "./src/Appbar.tsx",
-    "./auth": "./src/auth/auth-form.tsx",
     "./center": "./src/Center.tsx",
     "./select": "./src/Select.tsx",
-    "./textinput": "./src/text-input.tsx"
+    "./textinput": "./src/text-input.tsx",
+    "./toast": "./src/toast/toast.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
@@ -33,6 +33,7 @@
     "formik": "^2.4.6",
     "lucide-react": "^0.446.0",
     "react-hot-toast": "^2.4.1",
+    "sonner": "^1.5.0",
     "yup": "^1.4.0"
   }
 }

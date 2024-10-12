@@ -1,31 +1,50 @@
 "use client";
 import { useState } from "react";
-import { Appbar } from "../Appbar";
 import { useFormik } from "formik";
-import { formikInitialValuesforAuth } from "../formik/auth.formik";
+import { formikInitialValuesforAuth } from "../../../../packages/ui/src/formik/auth.formik";
 import PasswordInput from "./password-input";
 import { authFormSchema } from "@repo/validation/schema";
+import { showErrorToast, showSuccessToast } from "@repo/ui/toast";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 export const AuthForm = ({
   signIn,
 }: {
   signIn: (type: string, options: any) => void;
 }) => {
+  const { status } = useSession();
   const [login, setlogin] = useState<boolean>(false);
+  const router = useRouter();
   const { handleChange, handleSubmit, values, errors, touched } = useFormik({
     initialValues: formikInitialValuesforAuth,
     validationSchema: authFormSchema,
     onSubmit: async () => {
-      const result = await signIn("credentials", {
-        email: values.email,
-        password: values.password,
-      });
-      console.log("result:", result);
+      try {
+        const result: any = await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: false,
+          callbackUrl: "/",
+        });
+
+        if (result?.ok) {
+          showSuccessToast("Successfully signed in!");
+
+          router.push("/");
+        } else {
+          showErrorToast(
+            result?.error || "Wrong credentials, please try again"
+          );
+        }
+      } catch (error: any) {
+        showErrorToast("An unexpected error occurred. Please try again.");
+      }
     },
   });
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center px-2 py-8 bg-violet-100 min-h-screen">
+      <div className="flex flex-col items-center justify-center px-2 py-8 bg-violet-100 flex-grow">
         <div className="w-full  md:mt-0 sm:max-w-md xl:p-0 rounded-xl border-spacing-10 shadow-md border bg-white">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
@@ -50,6 +69,7 @@ export const AuthForm = ({
                 ) : null}
               </div>
               <div>
+                {/* SecureP@ss123 */}
                 <PasswordInput
                   value={values.password}
                   onChange={handleChange}
@@ -57,24 +77,6 @@ export const AuthForm = ({
                   label="Password"
                   error={touched.password ? errors.password : undefined}
                 />
-                {/* <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  Password
-                </label>
-                <input
-                  value={values.password}
-                  onChange={handleChange}
-                  type="password"
-                  name="password"
-                  placeholder="••••••••"
-                  className="bg-white border rounded-xl border-gray-300 text-gray-900 text-sm block w-full p-2.5 "
-                />
-                <EyeOff />
-                <Eye />
-                {errors.password && errors.password ? (
-                  <p className="text-sm font-normal text-red-600">
-                    {errors.password}
-                  </p>
-                ) : null} */}
               </div>
               {!login && (
                 <PasswordInput
@@ -86,23 +88,6 @@ export const AuthForm = ({
                     touched.confirmPassword ? errors.confirmPassword : undefined
                   }
                 />
-                // <div>
-                //   <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                //     Confirm password
-                //   </label>
-                //   <input
-                //     value={values.confirmPassword}
-                //     name="confirmPassword"
-                //     onChange={handleChange}
-                //     placeholder="••••••••"
-                //     className="bg-white border border-gray-300 text-gray-900 text-sm rounded-xl block w-full p-2.5 "
-                //   />
-                //   {errors.confirmPassword && errors.confirmPassword ? (
-                //     <p className="text-sm font-normal text-red-600">
-                //       {errors.confirmPassword}
-                //     </p>
-                //   ) : null}
-                // </div>
               )}
               <div className="mt-6 grid grid-cols-3 gap-3">
                 <div>
