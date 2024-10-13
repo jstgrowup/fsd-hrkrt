@@ -26,10 +26,12 @@ export const AuthForm = ({
           redirect: false,
           callbackUrl: "/",
         });
-
         if (result?.ok) {
-          showSuccessToast("Successfully signed in!");
-
+          if (login) {
+            showSuccessToast("Successfully Signed in!");
+          } else {
+            showSuccessToast("Signup Sucessfull!");
+          }
           router.push("/");
         } else {
           showErrorToast(

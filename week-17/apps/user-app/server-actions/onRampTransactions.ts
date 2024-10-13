@@ -1,14 +1,16 @@
 "use server";
+import { authOptions } from "@/app/lib/auth";
 import db from "@repo/db/client";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth";
+
 import { v4 as uuidv4 } from "uuid";
 export async function createOnRampTransactions(
   amount: number,
   provider: string
 ) {
   const session = await getServerSession(authOptions);
-  const userId = session.user.id;
+
+  const userId = "";
   const tokenFromBank = uuidv4();
   if (!userId) {
     return { message: "Unauthorized user" };

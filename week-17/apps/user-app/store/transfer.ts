@@ -1,10 +1,10 @@
-import { createOnRampTransactions } from "@/app/lib/actions/onRampTransactions";
+import { createOnRampTransactions } from "@/server-actions/onRampTransactions";
 import { TransferStoreType } from "@repo/utils/types";
 import { create } from "zustand";
 export const useTransferStore = create<TransferStoreType>((set) => ({
   loading: false,
   message: "",
-  blogs: [],
+  transactions: [],
   error: null,
   data: null,
   createTransactionStoreAction: async (amount: string, provider: string) => {
