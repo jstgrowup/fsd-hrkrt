@@ -1,4 +1,4 @@
-import { createOnRampTransactions } from "@/server-actions/onRampTransactions";
+import { createOnRampTransactions } from "@/server-actions/transaction.action";
 import { TransferStoreType } from "@repo/utils/types";
 import { create } from "zustand";
 export const useTransferStore = create<TransferStoreType>((set) => ({
@@ -6,7 +6,6 @@ export const useTransferStore = create<TransferStoreType>((set) => ({
   message: "",
   transactions: [],
   error: null,
-  data: null,
   createTransactionStoreAction: async (amount: string, provider: string) => {
     set({ loading: true, error: null });
     try {
@@ -14,8 +13,9 @@ export const useTransferStore = create<TransferStoreType>((set) => ({
         Number(amount),
         provider
       );
+      console.log("createdTransaction:returned", createdTransaction);
       set({ loading: false, message: createdTransaction?.message });
-      return true;
+      return createdTransaction;
     } catch (error: any) {
       set({ error: error.message, loading: false });
     }

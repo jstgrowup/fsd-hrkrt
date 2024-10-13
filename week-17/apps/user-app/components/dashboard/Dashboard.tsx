@@ -1,8 +1,8 @@
 "use client";
-import AddMoneyCard from "@/components/AddMoneyCard";
-import { BalanceCard } from "@/components/BalanceCard";
-import { OnRampTransactions } from "@/components/OnRampTransaction";
-import { SidebarItem } from "@/components/SidebarItem";
+import AddMoneyCard from "@/components/dashboard/AddMoneyCard";
+import { BalanceCard } from "@/components/dashboard/BalanceCard";
+import { OnRampTransactions } from "@/components/dashboard/OnRampTransaction";
+import { SidebarItem } from "@/components/dashboard/SidebarItem";
 import { DashboardSidebar } from "@/lib/dashboardSidebar";
 const Dashboard = () => {
   return (

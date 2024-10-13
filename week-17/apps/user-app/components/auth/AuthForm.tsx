@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
 import { useFormik } from "formik";
-import { formikInitialValuesforAuth } from "../../../../packages/ui/src/formik/auth.formik";
-import PasswordInput from "./password-input";
-import { authFormSchema } from "@repo/validation/schema";
 import { showErrorToast, showSuccessToast } from "@repo/ui/toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import PasswordInput from "./Password-input";
+import { authFormSchema } from "@repo/validation/schema/auth";
+import { formikInitialValuesforAuth } from "@repo/validation/formik/auth";
 export const AuthForm = ({
   signIn,
 }: {

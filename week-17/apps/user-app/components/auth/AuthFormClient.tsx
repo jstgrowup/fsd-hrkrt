@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { signIn } from "next-auth/react";
-import { AuthForm } from "./auth/auth-form";
+import { AuthForm } from "./AuthForm";
 
 const AuthFormClient = async () => {
   return (
