@@ -2,35 +2,46 @@ import {
   createOnRampTransactions,
   getOnRampTransactions,
 } from "@/server-actions/transaction.action";
-import { TransferStoreType } from "@repo/utils/types";
+import {
+  TransferStoreType,
+  OnRampTransactionsActionResponse,
+} from "@repo/utils/types";
 import { create } from "zustand";
+
 export const useTransferStore = create<TransferStoreType>((set) => ({
   loading: false,
-  message: "",
   transactions: [],
-  error: null,
+
   createTransactionStoreAction: async (amount: string, provider: string) => {
-    set({ loading: true, error: null });
+    set({ loading: true });
     try {
       const createdTransaction = await createOnRampTransactions(
         Number(amount),
         provider
       );
-      set({ loading: false, message: createdTransaction?.message });
+      set({ loading: false });
       return createdTransaction;
     } catch (error: any) {
-      set({ error: error.message, loading: false });
+      set({ loading: false });
     }
   },
   getAllTransactionsAction: async () => {
+    set({ loading: true });
     try {
-      const userTransactions = await getOnRampTransactions();
+      const userTransactions: OnRampTransactionsActionResponse =
+        await getOnRampTransactions();
+      const buildedTransactionData = {
+        data: userTransactions.data,
+        success: userTransactions.success,
+        message: userTransactions.message,
+      };
       set({
-        transactions: userTransactions ?? [],
+        transactions: userTransactions.data,
+        loading: false,
       });
-      return userTransactions;
+      return buildedTransactionData;
     } catch (error: any) {
-      set({ error: error.message, loading: false });
+      set({ loading: false });
     }
   },
 }));

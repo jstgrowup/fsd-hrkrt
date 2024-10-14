@@ -1,6 +1,7 @@
 "use server";
 import { authOptions } from "@/app/lib/auth";
 import db from "@repo/db/client";
+import { OnRampTransactionsActionResponse } from "@repo/utils/types";
 import { getServerSession } from "next-auth";
 
 import { v4 as uuidv4 } from "uuid";
@@ -39,7 +40,7 @@ export async function createOnRampTransactions(
     };
   }
 }
-export async function getOnRampTransactions() {
+export async function getOnRampTransactions(): Promise<OnRampTransactionsActionResponse> {
   try {
     const session: any = await getServerSession(authOptions);
     const userId = session?.user?.id;
@@ -51,9 +52,11 @@ export async function getOnRampTransactions() {
         userId,
       },
     });
-    if (userTransactions) {
-      return userTransactions;
-    }
+    return {
+      success: false,
+      message: "Unauthorized user",
+      data: userTransactions,
+    };
   } catch (error) {
     return {
       success: false,

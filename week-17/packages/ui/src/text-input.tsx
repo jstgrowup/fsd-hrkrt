@@ -12,7 +12,7 @@ export const TextInput = ({
   value: string | number;
 }) => {
   return (
-    <div className="pt-2">
+    <div className="flex flex-col gap-2">
       <label className="block text-sm font-medium text-gray-700">{label}</label>
       <input
         onChange={onChange}
