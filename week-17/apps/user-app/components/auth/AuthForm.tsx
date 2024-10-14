@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import PasswordInput from "./Password-input";
 import { authFormSchema } from "@repo/validation/schema/auth";
 import { formikInitialValuesforAuth } from "@repo/validation/formik/auth";
+import { Button } from "@repo/ui/button";
 export const AuthForm = ({
   signIn,
 }: {
@@ -136,6 +137,7 @@ export const AuthForm = ({
                   </p>
                 </div>
               </div>
+
               <button
                 type="submit"
                 className="w-full text-white bg-blue-500 hover:bg-primary-700 focus:ring-4 focus:outline-none  font-medium rounded-xl text-sm px-5 py-2.5 text-center "

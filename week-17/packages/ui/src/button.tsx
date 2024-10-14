@@ -1,12 +1,26 @@
+import { Loader2 } from "lucide-react";
 import { ButtonProps } from "./utils/types";
-export const Button = ({ onClick, children }: ButtonProps) => {
+export const Button = ({ onClick, children, loading }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       type="button"
-      className="rounded-xl w-full bg-blue-600 text-white py-3 px-4  hover:bg-blue-700  transition-colors font-medium"
+      disabled={loading}
+      className={`rounded-xl w-full py-3 px-4 font-medium transition-colors
+      ${
+        loading
+          ? "bg-blue-400 cursor-not-allowed"
+          : "bg-blue-600 hover:bg-blue-700"
+      } text-white`}
     >
-      {children}
+      {loading ? (
+        <span className="flex items-center justify-center">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Loading...
+        </span>
+      ) : (
+        children
+      )}
     </button>
   );
 };

@@ -39,3 +39,25 @@ export async function createOnRampTransactions(
     };
   }
 }
+export async function getOnRampTransactions() {
+  try {
+    const session: any = await getServerSession(authOptions);
+    const userId = session?.user?.id;
+    if (!userId) {
+      return { success: false, message: "Unauthorized user" };
+    }
+    const userTransactions = await db.onRampTransaction.findMany({
+      where: {
+        userId,
+      },
+    });
+    if (userTransactions) {
+      return userTransactions;
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong while fetching OnRamp transaction.",
+    };
+  }
+}

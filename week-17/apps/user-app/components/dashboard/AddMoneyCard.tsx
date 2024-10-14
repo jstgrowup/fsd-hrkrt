@@ -1,20 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@repo/ui/button";
 import { Select } from "@repo/ui/select";
 import { TextInput } from "@repo/ui/textinput";
 import { PlusCircle } from "lucide-react";
 import { useTransferStore } from "@/store/transfer";
 import { useFormik } from "formik";
-
 import { transferFormSchema } from "@repo/validation/schema/transfer";
 import { showErrorToast, showSuccessToast } from "@repo/ui/toast";
 import { formikInitialValuesforTransfer } from "@repo/validation/formik/transfer";
-
 const AddMoneyCard = () => {
   const createTransactionAction = useTransferStore(
     (store) => store.createTransactionStoreAction
   );
+  const transactionLoading = useTransferStore((store) => store.loading);
   const { handleChange, handleSubmit, values, errors, touched } = useFormik({
     initialValues: formikInitialValuesforTransfer,
     validationSchema: transferFormSchema,
@@ -30,7 +29,6 @@ const AddMoneyCard = () => {
           showErrorToast(result.message);
         }
       } catch (error: any) {
-        console.log("error:in 32", error);
         showErrorToast("An unexpected error occurred. Please try again.");
       }
     },
@@ -80,7 +78,9 @@ const AddMoneyCard = () => {
         </div>
 
         <div className="px-6 pb-6">
-          <Button onClick={handleSubmit}>Add Money</Button>
+          <Button onClick={handleSubmit} loading={transactionLoading}>
+            Add Money
+          </Button>
         </div>
       </form>
     </div>
