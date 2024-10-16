@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-const db = require("@repo/db/client");
+import db from "@repo/db/client";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
