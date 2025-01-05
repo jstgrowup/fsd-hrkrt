@@ -7,7 +7,7 @@ export function Card({
   className?: string;
   title: string;
   children: React.ReactNode;
-  href: string;
+  href?: string;
 }): JSX.Element {
   return (
     <a
@@ -16,7 +16,7 @@ export function Card({
       rel="noopener noreferrer"
       target="_blank"
     >
-      <h2>
+      <h2 className="text-sm">
         {title} <span>-&gt;</span>
       </h2>
       <p>{children}</p>

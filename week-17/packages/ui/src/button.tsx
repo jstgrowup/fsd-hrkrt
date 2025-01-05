@@ -1,20 +1,26 @@
-"use client";
-
-import { ReactNode } from "react";
-
-interface ButtonProps {
-  children: ReactNode;
-  className?: string;
-  appName: string;
-}
-
-export const Button = ({ children, className, appName }: ButtonProps) => {
+import { Loader2 } from "lucide-react";
+import { ButtonProps } from "./utils/types";
+export const Button = ({ onClick, children, loading }: ButtonProps) => {
   return (
     <button
-      className={className}
-      onClick={() => alert(`Hello from your ${appName} app!`)}
+      onClick={onClick}
+      type="button"
+      disabled={loading}
+      className={`rounded-xl w-full py-3 px-4 font-medium transition-colors
+      ${
+        loading
+          ? "bg-blue-400 cursor-not-allowed"
+          : "bg-blue-600 hover:bg-blue-700"
+      } text-white`}
     >
-      {children}
+      {loading ? (
+        <span className="flex items-center justify-center">
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          Loading...
+        </span>
+      ) : (
+        children
+      )}
     </button>
   );
 };
